@@ -52,6 +52,19 @@ public class CarController {
     }
 
     /**
+     * 通过车系查询
+     *
+     * @param carSeries
+     * @return
+     */
+    @GetMapping("findByCarSeries/{carSeries}")
+    public JSONResult findByCarSeries(@PathVariable String carSeries) {
+        List<Car> cars = carService.findByCarSeries(carSeries);
+        return JSONResult.ok(cars);
+    }
+    
+
+    /**
      * 通过id删除
      *
      * @param id
@@ -84,10 +97,22 @@ public class CarController {
     public JSONResult insertCar(Car car) {
         carService.insertCar(car);
         return JSONResult.ok();
-
-
-
-
-
     }
+
+        /**
+         * 通过车系买车
+         * @param id，quality
+         * @return
+         */
+        @PostMapping("buyCarById")
+        public String buyCarById(int id,int amount) {
+            Car car = carService.findById(id);
+            int stock = car.getStock() - amount;
+            if(stock < 0 ){
+                return car.getCarName() + car.getCarSeries() + "库存不足，最多可买"+car.getStock()+"辆。";
+            }
+            carService.updateStockById(id,stock);
+            return "购买成功："+car.getCarName()+amount+"辆。";
+        }
+
 }

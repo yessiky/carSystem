@@ -17,12 +17,19 @@ public interface CarDao {
     @Select("select * from carMessage where carName = #{carName}")
     List<Car> findByCarName(String carName);
 
+    @Select("select * from carMessage where carSeries = #{carSeries}")
+    List<Car> findByCarSeries(String carSeries);
+
     @Delete("delete from carMessage where id = #{id}")
     void deleteById(int id);
 
-    @Update("update carMessage set carName=#{carName},carType=#{carType},price=#{price},carSeries=#{carSeries} where id = #{id}")
+    @Update("update carMessage set carName=#{carName},carType=#{carType},price=#{price},carSeries=#{carSeries},stock=#{stock} where id = #{id}")
     void updateById(Car car);
 
-    @Insert("insert into carMessage(carName,carType,price,carSeries) values(#{carName},#{carType},#{price},#{carSeries})")
+    @Insert("insert into carMessage(carName,carType,price,carSeries,stock) values(#{carName},#{carType},#{price},#{carSeries},#{stock})")
     void insertCar(Car car);
+
+    @Update("update carMessage set stock=#{stock} where id = #{id}")
+    void updateStockById(int id,int stock);
+
 }

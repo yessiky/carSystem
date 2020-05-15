@@ -13,9 +13,13 @@ public interface CarService {
 
     List<Car> findByCarName(String carName);
 
+    List<Car> findByCarSeries(String carSeries);
+
     void deleteById(int id);
 
     void updateById(Car car);
 
     void insertCar(Car car);
+
+    void updateStockById(int id,int stock);
 }

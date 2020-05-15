@@ -30,6 +30,11 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    public List<Car> findByCarSeries(String carSeries) {
+        return carDao.findByCarSeries(carSeries);
+    }
+
+    @Override
     public void deleteById(int id) {
         carDao.deleteById(id);
     }
@@ -43,4 +48,7 @@ public class CarServiceImpl implements CarService {
     public void insertCar(Car car) {
         carDao.insertCar(car);
     }
+
+    @Override
+    public void updateStockById(int id,int stock){ carDao.updateStockById(id,stock);}
 }
