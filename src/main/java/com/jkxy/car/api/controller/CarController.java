@@ -51,6 +51,25 @@ public class CarController {
         return JSONResult.ok(cars);
     }
 
+    @PostMapping("findByCarNameF")
+    public JSONResult findByCarNameF(String carName,int start,int num) {
+        List<Car> cars = carService.findByCarNameF(carName,start,num);
+        return JSONResult.ok(cars);
+    }
+
+    /**
+     * 通过车名查询
+     *
+     * @param carName
+     * @return
+     */
+    @GetMapping("findByCarName")
+    public JSONResult findByCarNameUrlParam(String carName) {
+        List<Car> cars = carService.findByCarName(carName);
+        return JSONResult.ok(cars);
+    }
+
+
     /**
      * 通过车系查询
      *
@@ -62,7 +81,19 @@ public class CarController {
         List<Car> cars = carService.findByCarSeries(carSeries);
         return JSONResult.ok(cars);
     }
-    
+
+    /**
+     * 通过车系查询
+     *
+     * @param carSeries
+     * @return
+     */
+    @GetMapping("findByCarSeries")
+    public JSONResult findByCarSeriesUrlParam(String carSeries) {
+        List<Car> cars = carService.findByCarSeries(carSeries);
+        return JSONResult.ok(cars);
+    }
+
 
     /**
      * 通过id删除
@@ -114,5 +145,7 @@ public class CarController {
             carService.updateStockById(id,stock);
             return "购买成功："+car.getCarName()+amount+"辆。";
         }
+
+
 
 }

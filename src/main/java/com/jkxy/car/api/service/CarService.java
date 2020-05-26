@@ -13,6 +13,8 @@ public interface CarService {
 
     List<Car> findByCarName(String carName);
 
+    List<Car> findByCarNameF(String carName,int start,int num);
+
     List<Car> findByCarSeries(String carSeries);
 
     void deleteById(int id);
