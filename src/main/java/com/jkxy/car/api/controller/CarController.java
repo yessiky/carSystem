@@ -1,11 +1,13 @@
 package com.jkxy.car.api.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.jkxy.car.api.pojo.Car;
 import com.jkxy.car.api.service.CarService;
 import com.jkxy.car.api.utils.JSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,6 +25,7 @@ public class CarController {
      */
     @GetMapping("findAll")
     public JSONResult findAll() {
+
         List<Car> cars = carService.findAll();
         return JSONResult.ok(cars);
     }
@@ -53,7 +56,9 @@ public class CarController {
 
     @PostMapping("findByCarNameF")
     public JSONResult findByCarNameF(String carName,int start,int num) {
-        List<Car> cars = carService.findByCarNameF(carName,start,num);
+        PageHelper.startPage(start,num);
+        List<Car> cars = carService.findByCarNameF(carName);
+
         return JSONResult.ok(cars);
     }
 
@@ -103,7 +108,8 @@ public class CarController {
      */
     @GetMapping("deleteById/{id}")
     public JSONResult deleteById(@PathVariable int id) {
-        carService.deleteById(id);
+        carService.deleteStockById(id);
+        carService.deleteCarById(id);
         return JSONResult.ok();
     }
 
@@ -114,7 +120,8 @@ public class CarController {
      */
     @PostMapping("updateById")
     public JSONResult updateById(Car car) {
-        carService.updateById(car);
+        carService.updateCarById(car);
+        carService.updateStockById(car);
         return JSONResult.ok();
     }
 
@@ -137,13 +144,7 @@ public class CarController {
          */
         @PostMapping("buyCarById")
         public String buyCarById(int id,int amount) {
-            Car car = carService.findById(id);
-            int stock = car.getStock() - amount;
-            if(stock < 0 ){
-                return car.getCarName() + car.getCarSeries() + "库存不足，最多可买"+car.getStock()+"辆。";
-            }
-            carService.updateStockById(id,stock);
-            return "购买成功："+car.getCarName()+amount+"辆。";
+            return carService.buyCarById(id,amount);
         }
 
 

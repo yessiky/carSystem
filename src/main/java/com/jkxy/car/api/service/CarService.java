@@ -13,15 +13,23 @@ public interface CarService {
 
     List<Car> findByCarName(String carName);
 
-    List<Car> findByCarNameF(String carName,int start,int num);
+    List<Car> findByCarNameF(String carName);
 
     List<Car> findByCarSeries(String carSeries);
 
-    void deleteById(int id);
+    int findMaxCarId();
 
-    void updateById(Car car);
+    void deleteCarById(int id);
+
+    void deleteStockById(int id);
+
+    void updateCarById(Car car);
 
     void insertCar(Car car);
 
-    void updateStockById(int id,int stock);
+    void insertStock(Car car);
+
+    void updateStockById(Car car);
+
+    String buyCarById(int id,int amount);
 }
